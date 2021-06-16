@@ -10,8 +10,7 @@
     "clean": "rimraf dist/**",
     "lint": "eslint .",
     "prebuild": "npm run clean && npm run lint",
-    "build": "babel src -d dist --presets es2015,stage-0",
-    "prepublish": "npm run build"
+    "build": "babel src -d dist --presets es2015,stage-0"
   },
   "homepage": "https://github.com/rubencosta/react-intl-gettext#readme",
   "repository": {
