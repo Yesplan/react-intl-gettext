@@ -46,17 +46,43 @@ program
     )}]`,
     getRepositoryUrlFromPackageJson(userPkg)
   )
-  .action((src, dest, { pattern, useDefault, ignore, projectIdVersion, reportMsgidBugsTo }) => {
+  .option(
+    '--exclude-msgctxt',
+    'exclude the msgctxt field for entries'
+  )
+  .option(
+    '--source-reference-with-colon',
+    'use the #: sourcereference format instead of # sourcereference'
+  )
+  .option(
+    '--exclude-description',
+    'exclude the #. description field for entries'
+  )
+  .action((src, dest, {
+    pattern,
+    useDefault,
+    ignore,
+    projectIdVersion,
+    reportMsgidBugsTo,
+    excludeMsgctxt,
+    sourceReferenceWithColon,
+    excludeDescription,
+    }) => {
     writeFileSync(
       dest,
       potFormatter(
         messageReader({ cwd: src, messagesPattern: pattern, ignore }),
-        !!useDefault,
-        headerFormatter({
-          projectIdVersion,
-          reportMsgidBugsTo,
-          language: useDefault,
-        })
+        {
+          copyDefaultTranslation: !!useDefault,
+          header: headerFormatter({
+            projectIdVersion,
+            reportMsgidBugsTo,
+            language: useDefault,
+          }),
+          excludeMsgctxt,
+          sourceReferenceWithColon,
+          excludeDescription,
+        }
       )
     )
   })

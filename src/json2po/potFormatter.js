@@ -1,22 +1,42 @@
 const escapeString = (str) => str.replace(/"/g, '\\"')
 
-const buildMessage = copyDefaultTranslation => ({
+const buildMessage = (
+  copyDefaultTranslation,
+  excludeMsgctxt,
+  sourceReferenceWithColon,
+  excludeDescription) => ({
   reference,
   description,
   id,
   defaultMessage,
   translatedMessage,
-}) =>
-[
-  `#. ${description}`,
-  `# ${reference}`,
-  `msgctxt "${escapeString(id)}"`,
-  `msgid "${escapeString(defaultMessage)}"`,
-  `msgstr "${copyDefaultTranslation ? escapeString(translatedMessage || defaultMessage) : ''}"`,
-  '',
-].join('\n')
+}) => {
+    let entry = [
+      `#${sourceReferenceWithColon ? ': ' : ' '}${reference}`]
+    if (!excludeDescription) {
+      entry = [`#. ${description}`, ...entry]
+    }
+    if (!excludeMsgctxt) {
+      entry.push(`msgctxt "${escapeString(id)}"`)
+    }
+    entry = [...entry,
+    `msgid "${escapeString(defaultMessage)}"`,
+    `msgstr "${copyDefaultTranslation ? escapeString(translatedMessage || defaultMessage) : ''}"`,
+    '']
+    return entry.join('\n')
+  }
 
-export default (messages, copyDefaultTranslation, header = '') => {
-  const body = messages.map(buildMessage(copyDefaultTranslation)).join('\n')
+export default (messages, {
+  copyDefaultTranslation,
+  header = '',
+  excludeMsgctxt = false,
+  sourceReferenceWithColon = false,
+  excludeDescription = false,
+} = {}) => {
+  const body = messages.map(buildMessage(
+    copyDefaultTranslation,
+    excludeMsgctxt,
+    sourceReferenceWithColon,
+    excludeDescription)).join('\n')
   return header ? [header, '', body].join('\n') : body
 }

@@ -1,0 +1,29 @@
+#. a message of the a module
+# src_test/moduleA.json
+msgid "the a message"
+msgstr "the a message"
+
+#. b message of the a module
+# src_test/moduleA.json
+msgid "the b message"
+msgstr "the b message"
+
+#. c message of the a module
+# src_test/moduleA.json
+msgid "the a message"
+msgstr "the a message"
+
+#. a message of the b module
+# src_test/moduleB.json
+msgid "the a message"
+msgstr "the a message"
+
+#. b message of the b module
+# src_test/moduleB.json
+msgid "the b message"
+msgstr "the b message"
+
+#. c message of the b module
+# src_test/moduleB.json
+msgid "the c message"
+msgstr "the c message"

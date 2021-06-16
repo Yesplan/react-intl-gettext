@@ -1,0 +1,36 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: react-intl-gettext 5.2.0\n"
+"Report-Msgid-Bugs-To: [object Object]\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"X-Generator: react-intl-gettext 5.2.0\n"
+"POT-Creation-Date: 2021-06-16T14:02:12.568Z\n"
+"PO-Revision-Date: 2021-06-16T14:02:12.568Z\n"
+
+#: src_test/moduleA.json
+msgid "the a message"
+msgstr ""
+
+#: src_test/moduleA.json
+msgid "the b message"
+msgstr ""
+
+#: src_test/moduleA.json
+msgid "the a message"
+msgstr ""
+
+#: src_test/moduleB.json
+msgid "the a message"
+msgstr ""
+
+#: src_test/moduleB.json
+msgid "the b message"
+msgstr ""
+
+#: src_test/moduleB.json
+msgid "the c message"
+msgstr ""

@@ -41,7 +41,9 @@ describe('message formatter', () => {
           messagesPattern: '**/*.json',
           cwd: 'test/fixtures/messages',
         }),
-        true
+        {
+          copyDefaultTranslation: true,
+        }
       )
     })
     it('should map all messages to po', () => {
@@ -57,11 +59,71 @@ describe('message formatter', () => {
           messagesPattern: '**/*.json',
           cwd: 'test/fixtures/messages',
         }),
-        false,
-        header
+        {
+          copyDefaultTranslation: false,
+          header,
+        },
       )
     })
-    it('should map all messages to po', () => {
+    it('should map all messages to pot', () => {
+      expect(result).toEqual(formattedString)
+    })
+  })
+  context('called with excludemsgctxt', () => {
+    beforeEach(() => {
+      formattedString = readFileSync('./test/fixtures/pot/extractedWithoutMsgctxt.pot', 'utf-8')
+      result = potFormatter(
+        mergeMessages({
+          messagesPattern: '**/*.json',
+          cwd: 'test/fixtures/messages',
+        }),
+        {
+          copyDefaultTranslation: true,
+          excludeMsgctxt: true,
+        }
+      )
+    })
+    it('should map all messages to pot', () => {
+      expect(result).toEqual(formattedString)
+    })
+  })
+  context('called with sourceReferenceWithColon', () => {
+    beforeEach(() => {
+      formattedString = readFileSync(
+        './test/fixtures/pot/extractedWithSourceReferenceWithColon.pot',
+        'utf-8')
+      result = potFormatter(
+        mergeMessages({
+          messagesPattern: '**/*.json',
+          cwd: 'test/fixtures/messages',
+        }),
+        {
+          copyDefaultTranslation: true,
+          excludeMsgctxt: true,
+          sourceReferenceWithColon: true,
+        }
+      )
+    })
+    it('should map all messages to pot', () => {
+      expect(result).toEqual(formattedString)
+    })
+  })
+  context('called with excludeDescription', () => {
+    beforeEach(() => {
+      formattedString = readFileSync(
+        './test/fixtures/pot/extractedWithExcludeDescription.pot',
+        'utf-8')
+      result = potFormatter(
+        mergeMessages({
+          messagesPattern: '**/*.json',
+          cwd: 'test/fixtures/messages',
+        }),
+        {
+          excludeDescription: true,
+        }
+      )
+    })
+    it('should map all messages to pot', () => {
       expect(result).toEqual(formattedString)
     })
   })
