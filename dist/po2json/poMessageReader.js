@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.defaultPattern = exports.defaultNameMatcherPatternString = undefined;
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _glob = require('glob');
@@ -41,20 +43,33 @@ exports.default = function (_ref) {
     var _po$parse = _gettextParser.po.parse((0, _fs.readFileSync)((0, _path.join)(cwd, filename)), 'utf-8'),
         contexts = _po$parse.translations;
 
-    var mergedTranslations = Object.keys(contexts).filter(function (id) {
-      return id !== '';
-    }).reduce(function (acc, id) {
-      return _extends({}, acc, _defineProperty({}, id, Object.keys(contexts[id]).reduce(function (msgstr, nextContextObject, _, array) {
-        if (id !== '' && array.length > 1) {
-          throw new Error('More than one message was found for the context ' + id);
+    var translationsToProcess = Object.keys(contexts);
+    var mergedTranslations = translationsToProcess.reduce(function (messagesForLanguage, contextName) {
+      var extendMessagesForLanguage = _extends({}, messagesForLanguage);
+      if (contextName !== '' && Object.entries(contexts[contextName]).length > 1) {
+        throw new Error('More than one message was found for the context ' + contextName);
+      }
+      Object.entries(contexts[contextName]).forEach(function (_ref2) {
+        var _ref3 = _slicedToArray(_ref2, 2),
+            msgId = _ref3[0],
+            msgObject = _ref3[1];
+
+        var id = msgId;
+        if (contextName !== '' && contextName !== msgId) {
+          id = contextName;
         }
-        if (contexts[id][nextContextObject].msgstr.length > 1) {
+        if (msgId === '') {
+          /* Ignore entries with empty string as key, which store meta data */
+          return;
+        }
+        if (msgObject.msgstr.length > 1) {
           /* eslint-disable no-console */
-          console.warn('Plural definitions were found for the context ' + id + '.\n              Plurals are ignored!');
+          console.warn('Plural definitions were found for the context ' + contextName + '.\n               Plurals are ignored!');
           /* eslint-enable no-console */
         }
-        return contexts[id][nextContextObject].msgstr[0];
-      }, '')));
+        extendMessagesForLanguage[id] = msgObject.msgstr[0];
+      });
+      return extendMessagesForLanguage;
     }, {});
     return _defineProperty({}, langMatcher(filename), mergedTranslations);
   });

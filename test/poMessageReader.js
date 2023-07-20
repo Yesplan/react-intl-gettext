@@ -26,12 +26,36 @@ describe('po message reader', () => {
   context('called with valid po files', () => {
     beforeEach(() => {
       result = poMessageReader({
-        messagesPattern: '**/*.po',
+        messagesPattern: '**/test_output-*.po',
         cwd: 'test/fixtures/po',
       })
     })
     it('should return all messages', () => {
       expect(result).toEqual(expected)
+    })
+    it('should use id as a fallback for context', () => {
+      result = poMessageReader({
+        messagesPattern: '**/test_output_context-*.po',
+        cwd: 'test/fixtures/po',
+      })
+      expect(result).toEqual({
+        en: {
+          'the a message': 'the a message',
+          'the b message': 'the b message',
+          'another way of saying a': 'the a message',
+          'yet another way of saying a': 'the a message',
+          'another way of saying b': 'the b message',
+          'the c message': 'the c message',
+        },
+        pt: {
+          'the a message': 'a mensagem a',
+          'the b message': 'a mensagem b',
+          'the c message': 'a mensagem c',
+          'another way of saying a': 'a mensagem a',
+          'yet another way of saying a': 'a mensagem a',
+          'another way of saying b': 'a mensagem b',
+        },
+      })
     })
   })
   context('called with invalid po files', () => {
