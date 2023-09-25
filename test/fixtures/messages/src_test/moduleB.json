@@ -1,0 +1,17 @@
+[
+  {
+    "id": "b.a",
+    "description": "a message of the b module",
+    "defaultMessage": "the a message"
+  },
+  {
+    "id": "b.b",
+    "description": "b message of the b module",
+    "defaultMessage": "the b message"
+  },
+  {
+    "id": "b.c",
+    "description": "c message of the b module",
+    "defaultMessage": "the c message"
+  }
+]
