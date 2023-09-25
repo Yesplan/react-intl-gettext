@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 
-import { readFileSync } from 'fs'
+import {readFileSync} from 'fs'
 import expect from 'expect'
 import mergeMessages from '../src/json2po/jsonMessageReader'
 import potFormatter from '../src/json2po/potFormatter'
@@ -13,7 +13,7 @@ describe('message formatter', () => {
     expect(
       potFormatter(
         mergeMessages({
-          messagesPattern: '**/*.json',
+          messagesPattern: 'src_test/*.json',
           cwd: 'test/fixtures/potEscape',
         })
       )
@@ -24,7 +24,7 @@ describe('message formatter', () => {
       formattedString = readFileSync('./test/fixtures/pot/extracted.pot', 'utf-8')
       result = potFormatter(
         mergeMessages({
-          messagesPattern: '**/*.json',
+          messagesPattern: 'src_test/*.json',
           cwd: 'test/fixtures/messages',
         })
       )
@@ -38,7 +38,7 @@ describe('message formatter', () => {
       formattedString = readFileSync('./test/fixtures/pot/extractedWithDefault.po', 'utf-8')
       result = potFormatter(
         mergeMessages({
-          messagesPattern: '**/*.json',
+          messagesPattern: 'src_test/*.json',
           cwd: 'test/fixtures/messages',
         }),
         {
@@ -56,7 +56,7 @@ describe('message formatter', () => {
       header = 'test header'
       result = potFormatter(
         mergeMessages({
-          messagesPattern: '**/*.json',
+          messagesPattern: 'src_test/*.json',
           cwd: 'test/fixtures/messages',
         }),
         {
@@ -74,7 +74,7 @@ describe('message formatter', () => {
       formattedString = readFileSync('./test/fixtures/pot/extractedWithoutMsgctxt.pot', 'utf-8')
       result = potFormatter(
         mergeMessages({
-          messagesPattern: '**/*.json',
+          messagesPattern: 'src_test/*.json',
           cwd: 'test/fixtures/messages',
         }),
         {
@@ -94,7 +94,7 @@ describe('message formatter', () => {
         'utf-8')
       result = potFormatter(
         mergeMessages({
-          messagesPattern: '**/*.json',
+          messagesPattern: 'src_test/*.json',
           cwd: 'test/fixtures/messages',
         }),
         {
@@ -115,7 +115,7 @@ describe('message formatter', () => {
         'utf-8')
       result = potFormatter(
         mergeMessages({
-          messagesPattern: '**/*.json',
+          messagesPattern: 'src_test/*.json',
           cwd: 'test/fixtures/messages',
         }),
         {
@@ -124,6 +124,26 @@ describe('message formatter', () => {
       )
     })
     it('should map all messages to pot', () => {
+      expect(result).toEqual(formattedString)
+    })
+  })
+  context('should have a fixed, sorted result', () => {
+    beforeEach(() => {
+      formattedString = readFileSync(
+        './test/fixtures/pot/sorted.pot',
+        'utf-8')
+      result = potFormatter(
+        mergeMessages({
+          messagesPattern: 'sorting_test/*.json',
+          cwd: 'test/fixtures/messages',
+        }),
+        {
+          excludeDescription: true,
+          excludeMsgctxt: true,
+        }
+      )
+    })
+    it('sorting', () => {
       expect(result).toEqual(formattedString)
     })
   })

@@ -1,0 +1,35 @@
+# sorting_test/moduleA.json
+msgid "the a message"
+msgstr ""
+
+# sorting_test/moduleA.json
+msgid "the c message"
+msgstr ""
+
+# sorting_test/moduleA.json
+msgid "the y message"
+msgstr ""
+
+# sorting_test/moduleB.json
+msgid "the a message"
+msgstr ""
+
+# sorting_test/moduleB.json
+msgid "the b message"
+msgstr ""
+
+# sorting_test/moduleB.json
+msgid "the c message"
+msgstr ""
+
+# sorting_test/moduleC.json
+msgid "b message"
+msgstr ""
+
+# sorting_test/moduleC.json
+msgid "c message"
+msgstr ""
+
+# sorting_test/moduleC.json
+msgid "z message"
+msgstr ""

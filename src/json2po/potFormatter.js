@@ -32,11 +32,16 @@ export default (messages, {
   excludeMsgctxt = false,
   sourceReferenceWithColon = false,
   excludeDescription = false,
+  sortResults = true,
 } = {}) => {
-  const body = messages.map(buildMessage(
-    copyDefaultTranslation,
-    excludeMsgctxt,
-    sourceReferenceWithColon,
-    excludeDescription)).join('\n')
+  const body = (sortResults
+    ? messages.sort((msg1, msg2) => `${msg1.reference}${msg1.id}`.localeCompare(`${msg2.reference}${msg2.id}`))
+    : messages)
+      .map(buildMessage(
+      copyDefaultTranslation,
+      excludeMsgctxt,
+      sourceReferenceWithColon,
+      excludeDescription))
+    .join('\n')
   return header ? [header, '', body].join('\n') : body
 }
