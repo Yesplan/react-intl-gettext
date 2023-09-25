@@ -35,7 +35,8 @@ export default (messages, {
   sortResults = true,
 } = {}) => {
   const body = (sortResults
-    ? messages.sort((msg1, msg2) => `${msg1.reference}${msg1.id}`.localeCompare(`${msg2.reference}${msg2.id}`))
+    ? messages.sort((msg1, msg2) =>
+      `${msg1.reference}${msg1.id}`.localeCompare(`${msg2.reference}${msg2.id}`))
     : messages)
       .map(buildMessage(
       copyDefaultTranslation,

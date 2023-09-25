@@ -40,8 +40,12 @@ exports.default = function (messages) {
       _ref2$sourceReference = _ref2.sourceReferenceWithColon,
       sourceReferenceWithColon = _ref2$sourceReference === undefined ? false : _ref2$sourceReference,
       _ref2$excludeDescript = _ref2.excludeDescription,
-      excludeDescription = _ref2$excludeDescript === undefined ? false : _ref2$excludeDescript;
+      excludeDescription = _ref2$excludeDescript === undefined ? false : _ref2$excludeDescript,
+      _ref2$sortResults = _ref2.sortResults,
+      sortResults = _ref2$sortResults === undefined ? true : _ref2$sortResults;
 
-  var body = messages.map(buildMessage(copyDefaultTranslation, excludeMsgctxt, sourceReferenceWithColon, excludeDescription)).join('\n');
+  var body = (sortResults ? messages.sort(function (msg1, msg2) {
+    return ('' + msg1.reference + msg1.id).localeCompare('' + msg2.reference + msg2.id);
+  }) : messages).map(buildMessage(copyDefaultTranslation, excludeMsgctxt, sourceReferenceWithColon, excludeDescription)).join('\n');
   return header ? [header, '', body].join('\n') : body;
 };

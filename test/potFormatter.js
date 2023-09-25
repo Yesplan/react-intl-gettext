@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 
-import {readFileSync} from 'fs'
+import { readFileSync } from 'fs'
 import expect from 'expect'
 import mergeMessages from '../src/json2po/jsonMessageReader'
 import potFormatter from '../src/json2po/potFormatter'
